@@ -1,16 +1,22 @@
 import { Pool } from 'pg';
 
-const DATABASE_URL = process.env.DATABASE_URL;
+let pool: Pool | null = null;
 
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set. Please create .env.local with your database connection string.');
+function getPool() {
+  if (!pool) {
+    const DATABASE_URL = process.env.DATABASE_URL;
+    if (!DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is not set. Please create .env.local with your database connection string.');
+    }
+    pool = new Pool({
+      connectionString: DATABASE_URL,
+    });
+  }
+  return pool;
 }
 
-const pool = new Pool({
-  connectionString: DATABASE_URL,
-});
-
 export async function initializeDatabase() {
+  const pool = getPool();
   const client = await pool.connect();
   try {
     // Create patients table
@@ -36,4 +42,4 @@ export async function initializeDatabase() {
   }
 }
 
-export default pool;
+export default getPool();

@@ -2,9 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { LogOut, Home, Users, FileText, Settings, X, Logs, Moon, Sun, Plus, Edit2, Trash2, Eye } from 'lucide-react'
+import { LogOut, Home, Users, FileText, Settings, X, Logs, Moon, Sun } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useThemeMode } from '@/lib/useTheme'
 
 export default function HomePage() {

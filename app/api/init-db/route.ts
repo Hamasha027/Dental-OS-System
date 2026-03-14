@@ -1,21 +1,27 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 
-const DATABASE_URL = process.env.DATABASE_URL;
+let pool: Pool | null = null;
 
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set. Please create .env.local with your database connection string.');
-}
-
-const pool = new Pool({
-  connectionString: DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
+function getPool() {
+  if (!pool) {
+    const DATABASE_URL = process.env.DATABASE_URL;
+    if (!DATABASE_URL) {
+      throw new Error('DATABASE_URL environment variable is not set. Please create .env.local with your database connection string.');
+    }
+    pool = new Pool({
+      connectionString: DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      }
+    });
   }
-});
+  return pool;
+}
 
 export async function GET(request: NextRequest) {
   try {
+    const pool = getPool();
     const client = await pool.connect();
     
     try {
