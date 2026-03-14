@@ -2,13 +2,35 @@
 
 import { useRouter } from 'next/navigation'
 import { LogOut, Home, Users, FileText, Settings, X, Logs, Moon, Sun, Plus } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useThemeMode } from '@/lib/useTheme'
 
 export default function ReportsPage() {
   const router = useRouter()
   const { theme, setTheme, mounted } = useThemeMode()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    // Verify user is actually authenticated
+    const verifyAuth = async () => {
+      try {
+        const response = await fetch('/api/verify-auth', {
+          method: 'GET',
+          credentials: 'include'
+        })
+        
+        if (!response.ok) {
+          router.push('/')
+          return
+        }
+      } catch (error) {
+        console.error('Auth verification error:', error)
+        router.push('/')
+      }
+    }
+    
+    verifyAuth()
+  }, [router])
 
   const toggleDarkMode = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')

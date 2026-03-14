@@ -34,20 +34,14 @@ export default function Home() {
 
   // Clear all inputs on page load/refresh
   useEffect(() => {
-    // Check if user is already logged in
-    const userEmail = localStorage.getItem('userEmail')
-    if (userEmail) {
-      router.push('/home')
-      return
-    }
-    
+    // Inputs are cleared by default state
     setEmail('')
     setPassword('')
     setCode(['', '', '', '', '', ''])
     setShowPassword(false)
     setErrors({ email: '', password: '' })
     setLoginMethod('email')
-  }, [router])
+  }, [])
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return

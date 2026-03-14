@@ -1,11 +1,19 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Define protected routes
+// Define protected routes that require authentication
 const protectedRoutes = ['/home', '/patients', '/invoices', '/appointments', '/services', '/reports', '/settings']
+
+// Define public routes that don't require authentication
+const publicRoutes = ['/', '/api/login', '/api/logout', '/api/verify-code', '/api/verify-auth', '/api/init-db']
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+
+  // Allow public routes and API routes to pass through
+  if (publicRoutes.includes(pathname)) {
+    return NextResponse.next()
+  }
 
   // Check if the route is protected
   const isProtectedRoute = protectedRoutes.some(route => 
@@ -13,10 +21,10 @@ export function middleware(request: NextRequest) {
   )
 
   if (isProtectedRoute) {
-    // Try to get user email from cookies (most secure) or fall back to check later
+    // Check for authentication cookie
     const userEmail = request.cookies.get('userEmail')?.value
 
-    // If no user email cookie, redirect to login
+    // If no user email cookie, redirect to login page
     if (!userEmail) {
       return NextResponse.redirect(new URL('/', request.url))
     }

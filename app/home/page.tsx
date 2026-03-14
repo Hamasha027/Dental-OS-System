@@ -18,12 +18,36 @@ export default function HomePage() {
   const [patientsLoading, setPatientsLoading] = useState(false)
 
   useEffect(() => {
-    // Get user email and login method from localStorage
-    const email = localStorage.getItem('userEmail') || ''
-    const method = localStorage.getItem('loginMethod') || ''
-    setUserEmail(email)
-    setLoginMethod(method)
-  }, [])
+    // Verify user is actually authenticated by making API call
+    const verifyAuth = async () => {
+      try {
+        const response = await fetch('/api/verify-auth', {
+          method: 'GET',
+          credentials: 'include' // Include cookies
+        })
+        
+        if (!response.ok) {
+          // Not authenticated, redirect to login
+          router.push('/')
+          return
+        }
+        
+        const data = await response.json()
+        if (data.email) {
+          setUserEmail(data.email)
+          setLoginMethod(data.method || 'email')
+        } else {
+          // No email returned, not authenticated
+          router.push('/')
+        }
+      } catch (error) {
+        console.error('Auth verification error:', error)
+        router.push('/')
+      }
+    }
+    
+    verifyAuth()
+  }, [router])
 
   useEffect(() => {
     // Fetch patients when activeMenu is set to patients section
