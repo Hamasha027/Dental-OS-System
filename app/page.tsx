@@ -315,11 +315,11 @@ export default function Home() {
 
           {/* 6-Digit Code Login Form */}
           {loginMethod === 'code' && (
-            <form onSubmit={handleSubmitCode} className="space-y-8 w-full md:w-[600px]" dir="rtl">
+            <form onSubmit={handleSubmitCode} className="space-y-8 w-full md:w-150" dir="rtl">
               {/* Code Login Header with Icon */}
               <div className="text-center space-y-3 md:space-y-4 pb-2 md:pb-4">
                 <div className="flex justify-center">
-                  <div className="p-3 md:p-4 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-full">
+                  <div className="p-3 md:p-4 bg-linear-to-br from-blue-100 to-cyan-100 rounded-full">
                     <Shield size={32} className="text-[#219ebc]" />
                   </div>
                 </div>
