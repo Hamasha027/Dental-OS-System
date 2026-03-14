@@ -117,7 +117,7 @@ export default function AppointmentsPage() {
 
         <div className="flex-1 p-6 overflow-auto bg-[#f8f9fa] dark:bg-black text-gray-900 dark:text-gray-100">
           <p className="text-2xl font-bold text-gray-800 dark:text-white font-sirwan">وادەی چاوپێکەوتن</p>
-                    <p className="text-2xl font-bold text-gray-800 dark:text-white font-sirwan">وادەی چاوپێکەوتن</p>
+                   
         </div>
       </main>
     </div>
