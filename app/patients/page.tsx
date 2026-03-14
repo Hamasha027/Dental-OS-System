@@ -116,7 +116,7 @@ export default function patients() {
         </header>
 
         <div className="flex-1 p-6 overflow-auto bg-[#f8f9fa] dark:bg-black text-gray-900 dark:text-gray-100">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white font-sirwan">   نەخۆشەکان.</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white font-sirwan">    نەخۆشەکان.</h1>
         </div>
       </main>
     </div>
